@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Трекер навчання</title>
+  <meta name="description" content="Трекер навчання записує, скільки часу ви витрачаєте на кожен предмет, і показує останні сім днів одним поглядом.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232347e0'/%3E%3Crect x='7' y='17' width='4.5' height='8' rx='1' fill='white'/%3E%3Crect x='13.75' y='11' width='4.5' height='14' rx='1' fill='white'/%3E%3Crect x='20.5' y='7' width='4.5' height='18' rx='1' fill='white'/%3E%3C/svg%3E">
+  <script>
+    /* Тема застосовується до відмальовування, щоб не було спалаху */
+    try {
+      var saved = localStorage.getItem("theme");
+      var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = saved || (dark ? "dark" : "light");
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;600;700;800&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Перейти до вмісту</a>
+
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="#top">Трекер навчання</a>
+      <nav aria-label="Розділи сторінки">
+        <a href="#features">Можливості</a>
+        <a href="#week">Тиждень</a>
+        <a href="#how">Як це працює</a>
+      </nav>
+      <button class="theme" id="theme" type="button" aria-label="Перемкнути світлу й темну тему">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div id="top"></div>
+
+    <section class="wrap hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Скільки ви насправді вчитесь?</h1>
+        <p class="lead">Трекер навчання записує, скільки часу ви витрачаєте на кожен предмет, і показує останні сім днів одним поглядом. Поставте тижневу ціль, додавайте сесії одним натисканням і бачте, де відстаєте.</p>
+        <div class="actions">
+          <a class="btn" href="#tracker">Спробувати демо</a>
+          <a class="btn ghost" href="#features">Можливості</a>
+        </div>
+      </div>
+
+      <section class="tracker" id="tracker" aria-labelledby="tr-title">
+        <h2 id="tr-title">Останні 7 днів</h2>
+        <div class="total">
+          <strong id="total" aria-live="polite">…</strong>
+          <span>навчання за тиждень</span>
+        </div>
+        <p class="streak" id="streak"></p>
+        <ul class="subjects" id="subjects" aria-label="Предмети й тижневі цілі"></ul>
+        <div class="panel-foot">
+          <p>Це демо з прикладами даних. Натисніть «+30 хв» біля предмета, і прогрес, серія та графік нижче оновляться.</p>
+          <button class="btn small ghost" id="reset" type="button">Почати спочатку</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="wrap block" id="features" aria-labelledby="features-title">
+      <div class="section-head">
+        <h2 id="features-title">Що вміє трекер</h2>
+        <p>Чотири речі, які потрібні, щоб навчання не губилося серед інших справ.</p>
+      </div>
+
+      <dl class="features">
+        <div>
+          <dt>Предмети й цілі</dt>
+          <dd>Додайте предмети та задайте, скільки годин на тиждень хочете на них витрачати.</dd>
+        </div>
+        <div>
+          <dt>Сесії одним натисканням</dt>
+          <dd>Відмічайте сесію: предмет, тривалість і короткий запис про те, що вивчили.</dd>
+        </div>
+        <div>
+          <dt>Огляд тижня</dt>
+          <dd>Графік показує, у які дні ви вчились, а смужки прогресу, де ви відстаєте від цілі.</dd>
+        </div>
+        <div>
+          <dt>Серії днів</dt>
+          <dd>Лічильник днів поспіль допомагає тримати темп без жорстких планів.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="wrap block" id="week" aria-labelledby="week-title">
+      <div class="section-head">
+        <h2 id="week-title">Тиждень за днями</h2>
+        <p>Висота стовпчика показує, скільки хвилин ви вчилися цього дня, число над ним теж у хвилинах. Сьогоднішній день виділено.</p>
+      </div>
+
+      <div class="chart-panel">
+        <ol class="week" id="week-chart" aria-label="Хвилини навчання за останні 7 днів"></ol>
+      </div>
+    </section>
+
+    <section class="wrap block" id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <h2 id="how-title">Як це працює</h2>
+        <p>Від першого предмета до зрозумілого тижня потрібно чотири кроки.</p>
+      </div>
+
+      <ol class="plan">
+        <li>
+          <div>
+            <h3>Додайте предмети</h3>
+            <p>Назвіть предмет і поставте тижневу ціль у годинах.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Позначайте сесії</h3>
+            <p>Після кожного заняття додайте тривалість і коротку нотатку.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Дивіться тиждень</h3>
+            <p>Графік і смужки прогресу покажуть, де ви вже на цілі, а де ще ні.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Коригуйте плани</h3>
+            <p>Перенесіть час на предмети, які відстають, і наступного тижня порівняйте результат.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Влада Кушнір, «Трекер навчання».</p>
+    <a href="#top">На початок сторінки</a>
+  </footer>
+</body>
+</html>

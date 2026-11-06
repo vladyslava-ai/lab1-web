@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "esbenp.prettier-vscode",
+    "ms-python.python",
+    "eamodio.gitlens"
+  ]
+}
